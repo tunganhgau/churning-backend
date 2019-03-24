@@ -21,6 +21,10 @@ connection.once('open', () => {
 
 app.use('/', router);
 
+router.route('/test').get((req, res) => {
+  res.json({"test":"success"});
+});
+
 router.route('/issues').get((req, res) => {
   Issue.find((err, issues) => {
       if (err)
