@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
-import Issue from './models/issue.js';
+import Point from './models/point.js';
 
 const app = express();
 const router = express.Router();
@@ -16,70 +16,70 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0-d5qot.mongodb.net/test?retr
 const connection = mongoose.connection;
 
 connection.once('open', () => {
-    console.log('MongoDB database connection established successfully!');
+  console.log('MongoDB database connection established successfully!');
 });
 
 app.use('/', router);
 
-router.route('/test').get((req, res) => {
-  res.json({"test":"success"});
+router.route('/').get((req, res) => {
+  res.send('success');
 });
 
-router.route('/issues').get((req, res) => {
-  Issue.find((err, issues) => {
-      if (err)
-          console.log(err);
-      else
-          res.json(issues);
+router.route('/points').get((req, res) => {
+  Point.find((err, points) => {
+    if (err)
+      console.log(err);
+    else
+      res.json(points);
   });
 });
 
-router.route('/issues/:id').get((req, res) => {
-  Issue.findById(req.params.id, (err, issue) => {
-      if (err)
-          console.log(err);
-      else
-          res.json(issue);
+router.route('/points/:id').get((req, res) => {
+  Point.findById(req.params.id, (err, point) => {
+    if (err)
+      console.log(err);
+    else
+      res.json(point);
   })
 });
 
-router.route('/issues/add').post((req, res) => {
-  let issue = new Issue(req.body);
-  issue.save()
-      .then(issue => {
-          res.status(200).json({'issue': 'Added successfully'});
-      })
-      .catch(err => {
-          res.status(400).send('Failed to create new record');
-      });
+router.route('/points/add').post((req, res) => {
+  let point = new Point(req.body);
+  point.save()
+    .then(point => {
+      res.status(200).json({ 'point': 'Added successfully' });
+    })
+    .catch(err => {
+      res.status(400).send('Failed to create new record');
+    });
 });
 
-router.route('/issues/update/:id').post((req, res) => {
-  Issue.findById(req.params.id, (err, issue) => {
-      if (!issue)
-          return next(new Error('Could not load Document'));
-      else {
-          issue.title = req.body.title;
-          issue.responsible = req.body.responsible;
-          issue.description = req.body.description;
-          issue.severity = req.body.severity;
-          issue.status = req.body.status;
+router.route('/points/update/:id').post((req, res) => {
+  Point.findById(req.params.id, (err, point) => {
+    if (!point)
+      return next(new Error('Could not load Document'));
+    else {
+      point.title = req.body.title;
+      point.responsible = req.body.responsible;
+      point.description = req.body.description;
+      point.severity = req.body.severity;
+      point.status = req.body.status;
 
-          issue.save().then(issue => {
-              res.json('Update done');
-          }).catch(err => {
-              res.status(400).send('Update failed');
-          });
-      }
+      point.save().then(point => {
+        res.json('Update done');
+      }).catch(err => {
+        res.status(400).send('Update failed');
+      });
+    }
   });
 });
 
-router.route('/issues/delete/:id').get((req, res) => {
-  Issue.findByIdAndRemove({_id: req.params.id}, (err, issue) => {
-      if (err)
-          res.json(err);
-      else
-          res.json('Removed successfully');
+router.route('/points/delete/:id').get((req, res) => {
+  Point.findByIdAndRemove({ _id: req.params.id }, (err, point) => {
+    if (err)
+      res.json(err);
+    else
+      res.json('Removed successfully');
   });
 });
 
@@ -88,5 +88,5 @@ if (port == null || port == "") {
   port = 4000;
 }
 
-app.listen(port, () => console.log(`Express server running on port:` +port));
+app.listen(port, () => console.log(`Express server running on port:` + port));
 

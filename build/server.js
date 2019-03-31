@@ -8,7 +8,7 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
-var _Issue = _interopRequireDefault(require("./models/Issue"));
+var _point = _interopRequireDefault(require("./models/point.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,35 +26,38 @@ connection.once('open', function () {
   console.log('MongoDB database connection established successfully!');
 });
 app.use('/', router);
-router.route('/issues').get(function (req, res) {
-  _Issue.default.find(function (err, issues) {
-    if (err) console.log(err);else res.json(issues);
+router.route('/').get(function (req, res) {
+  res.send('success');
+});
+router.route('/points').get(function (req, res) {
+  _point.default.find(function (err, points) {
+    if (err) console.log(err);else res.json(points);
   });
 });
-router.route('/issues/:id').get(function (req, res) {
-  _Issue.default.findById(req.params.id, function (err, issue) {
-    if (err) console.log(err);else res.json(issue);
+router.route('/points/:id').get(function (req, res) {
+  _point.default.findById(req.params.id, function (err, point) {
+    if (err) console.log(err);else res.json(point);
   });
 });
-router.route('/issues/add').post(function (req, res) {
-  var issue = new _Issue.default(req.body);
-  issue.save().then(function (issue) {
+router.route('/points/add').post(function (req, res) {
+  var point = new _point.default(req.body);
+  point.save().then(function (point) {
     res.status(200).json({
-      'issue': 'Added successfully'
+      'point': 'Added successfully'
     });
   }).catch(function (err) {
     res.status(400).send('Failed to create new record');
   });
 });
-router.route('/issues/update/:id').post(function (req, res) {
-  _Issue.default.findById(req.params.id, function (err, issue) {
-    if (!issue) return next(new Error('Could not load Document'));else {
-      issue.title = req.body.title;
-      issue.responsible = req.body.responsible;
-      issue.description = req.body.description;
-      issue.severity = req.body.severity;
-      issue.status = req.body.status;
-      issue.save().then(function (issue) {
+router.route('/points/update/:id').post(function (req, res) {
+  _point.default.findById(req.params.id, function (err, point) {
+    if (!point) return next(new Error('Could not load Document'));else {
+      point.title = req.body.title;
+      point.responsible = req.body.responsible;
+      point.description = req.body.description;
+      point.severity = req.body.severity;
+      point.status = req.body.status;
+      point.save().then(function (point) {
         res.json('Update done');
       }).catch(function (err) {
         res.status(400).send('Update failed');
@@ -62,10 +65,10 @@ router.route('/issues/update/:id').post(function (req, res) {
     }
   });
 });
-router.route('/issues/delete/:id').get(function (req, res) {
-  _Issue.default.findByIdAndRemove({
+router.route('/points/delete/:id').get(function (req, res) {
+  _point.default.findByIdAndRemove({
     _id: req.params.id
-  }, function (err, issue) {
+  }, function (err, point) {
     if (err) res.json(err);else res.json('Removed successfully');
   });
 });
@@ -75,7 +78,7 @@ if (port == null || port == "") {
   port = 4000;
 }
 
-app.listen(4000, function () {
-  return console.log("Express server running on port 4000");
+app.listen(port, function () {
+  return console.log("Express server running on port:" + port);
 });
 //# sourceMappingURL=server.js.map
