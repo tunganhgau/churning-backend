@@ -74,7 +74,7 @@ router.route('/points/update/:id').post((req, res) => {
   });
 });
 
-router.route('/points/delete/:id').get((req, res) => {
+router.route('/points/delete/:id').delete((req, res) => {
   Point.findByIdAndRemove({ _id: req.params.id }, (err, point) => {
     if (err)
       res.json(err);
