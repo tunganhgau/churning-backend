@@ -59,12 +59,11 @@ router.route('/points/update/:id').post((req, res) => {
     if (!point)
       return next(new Error('Could not load Document'));
     else {
-      point.title = req.body.title;
-      point.responsible = req.body.responsible;
-      point.description = req.body.description;
-      point.severity = req.body.severity;
-      point.status = req.body.status;
-
+      point.name = req.body.name;
+      point.point = req.body.point;
+      point.expiration = req.body.expiration;
+      point.type = req.body.type;
+      point.accountNumber = req.body.accountNumber;
       point.save().then(point => {
         res.json('Update done');
       }).catch(err => {
