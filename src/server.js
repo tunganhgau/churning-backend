@@ -5,13 +5,19 @@ import mongoose from 'mongoose';
 
 import Point from './models/point.js';
 
+require('dotenv').config()
+
 const app = express();
 const router = express.Router();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0-d5qot.mongodb.net/test?retryWrites=true');
+const MONGODB_USERNAME = process.env.MONGODB_USERNAME;
+const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD;
+const MONGODB_URL = process.env.MONGODB_URL;
+
+mongoose.connect('mongodb+srv://'+MONGODB_USERNAME+':'+MONGODB_PASSWORD+'@'+MONGODB_URL);
 
 const connection = mongoose.connection;
 
@@ -75,6 +81,17 @@ router.route('/points/update/:id').post((req, res) => {
 
 router.route('/points/delete/:id').delete((req, res) => {
   Point.findByIdAndRemove({ _id: req.params.id }, (err, point) => {
+    if (err)
+      res.json(err);
+    else
+      res.json('Removed successfully');
+  });
+});
+
+
+
+router.route('/value/:id').get((req, res) => {
+  ProgramValue.find({ _id: req.params.id }, (err, point) => {
     if (err)
       res.json(err);
     else

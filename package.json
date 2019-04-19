@@ -9,6 +9,7 @@
     "clean": "rm -rf build && mkdir build",
     "clean-window": "rmdir /s /q build",
     "build-babel": "babel -d ./build ./src -s",
+    "db-init": "node ./src/db-init.js",
     "build": "npm run build-babel",
     "start": "node ./build/server.js"
   },
@@ -26,6 +27,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "mongoose": "^5.4.19"
   }
