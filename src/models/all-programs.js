@@ -2,62 +2,62 @@ module.exports =
 [
   {
     name: "Jetblue",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
-    name: "American names",
-    type: "airline",
+    name: "American Airlines",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "United",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "British Airway",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "All Nippon Airways",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "Cathay Pacific",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "Delta",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "Southwest",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "Avianca (LifeMiles)",
-    type: "airline",
+    type: "Airline",
     value: 1.2
   },
   {
     name: "Hilton",
-    type: "hotel",
+    type: "Hotel",
     value: 0.4
   },
   {
     name: "Marriot",
-    type: "hotel",
+    type: "Hotel",
     value: 0.6
   },
   {
     name: "Hyatt",
-    type: "hotel",
+    type: "Hotel",
     value: 1.5
   }
 ];
