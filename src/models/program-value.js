@@ -7,6 +7,9 @@ let ProgramValue = new Schema({
   name: {
     type: String
   },
+  type: {
+    type: String
+  },
   value: {
     type: Number
   },

@@ -9,9 +9,10 @@
     "clean": "rm -rf build && mkdir build",
     "clean-window": "rmdir /s /q build",
     "build-babel": "babel -d ./build ./src -s",
-    "db-init": "node ./src/db-init.js",
+    "db-init": "npm run build && node ./build/db-init.js",
     "build": "npm run build-babel",
-    "start": "node ./build/server.js"
+    "start": "node ./build/server.js",
+    "build-and-start": "npm run build && npm start"
   },
   "keywords": [],
   "author": "",

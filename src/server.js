@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import Point from './models/point.js';
+import ProgramValue from './models/program-value';
 
 require('dotenv').config()
 
@@ -88,15 +89,30 @@ router.route('/points/delete/:id').delete((req, res) => {
   });
 });
 
-
-
-router.route('/value/:id').get((req, res) => {
-  ProgramValue.find({ _id: req.params.id }, (err, point) => {
+router.route('/airlines').get((req, res) => {
+  ProgramValue.find({'type':'airline'},(err, airlines) => {
     if (err)
-      res.json(err);
+      console.log(err);
     else
-      res.json('Removed successfully');
-  });
+      res.json(airlines);
+  })
+});
+
+router.route('/hotels').get((req, res) => {
+  ProgramValue.find({'type':'hotel'},(err, hotels) => {
+    if (err)
+      console.log(err);
+    else
+      res.json(hotels);
+  })
+});
+router.route('/programs/:id').get((req, res) => {
+  ProgramValue.findById(req.params.id, (err, point) => {
+    if (err)
+      console.log(err);
+    else
+      res.json(point);
+  })
 });
 
 let port = process.env.PORT;
